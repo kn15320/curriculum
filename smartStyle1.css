@@ -16,9 +16,11 @@
 
 @media screen and (max-width: 479px) {
 
-    .clearfix::after{ 
-        clear: both;
-    }
+    /* .clearfix::after{ 
+        content: "";
+        clear: none;
+        display: block;
+    } */
     
     .header {
         width: 150px;
@@ -26,11 +28,12 @@
 
     .right {
         width: 150px;
-        clear: left;
+        float: none;
     }
 
     .left {
         width: 150px;
+        float: none;
     }
 
     .footer {
