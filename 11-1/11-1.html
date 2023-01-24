@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        th, td {
+            padding : 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <select id="hoge" onchange="changeLang()">
+        <option id="select" value="0">選択してください</option>
+        <option id="selected_jpn" value="1">日本語</option>
+        <option id="selected_en" value="2">English</option>
+        <option id="selected_all" value="all">全て表示</option>
+    </select>
+    <table>
+        <tr id="jp">
+            <th>日本</th>
+            <td>こんにちは</td>
+            <td>ありがとう</td>
+            <td>さようなら</td>
+        </tr>
+        <tr id="eg">
+            <th>English</th>
+            <td>Hello</td>
+            <td>Thank you</td>
+            <td>Good Bye</td>
+        </tr>
+    </table>
+
+    <script>
+        //①onchangeで使用されている関数の中身を実装してください。
+        function changeLang(){
+            
+            let jp = document.getElementById('jp');    
+            let eg = document.getElementById('eg');
+
+            let change = document.getElementById('hoge').value;
+
+            if(change === '1'){
+                jp.style.visibility = "visible";
+                eg.style.visibility = "hidden";
+            }else if(change === '2'){
+                eg.style.visibility = "visible";
+                jp.style.visibility = "hidden";
+            }else{
+                eg.style.visibility = "visible";
+                jp.style.visibility = "visible";
+            }
+        }
+
+    </script>
+</body>
+</html>
