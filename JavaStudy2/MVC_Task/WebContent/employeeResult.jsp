@@ -23,9 +23,8 @@
         }
 
         // FIXME Step-2-1: リクエストよりレスポンスBeanを取得しなさい。
-        // Tips: 正確な型（クラス）でキャストすること java ResponseBeanへキャスト
-        responseBean = (ResponseBean)request.getAttribute("empId");//文字変更
-        System.out.println(responseBean);
+        // Tips: 正確な型（クラス）でキャストすること
+        responseBean = responseBean.getResponseBean();
         empResultList = responseBean.getEmplyeeBeanList();
         requestStatus = responseBean.getRequestStaus();
         message = responseBean.getMessage();
@@ -67,13 +66,12 @@
             <tr class="td-max-width td-last-btn td-last-checkbox">
                 <td class="td-marker"></td>
                 <!-- FIXME Step-2-3: 社員情報一覧に表示する内容を式（Expression）を用いて表示しなさい。 -->
-                
                 <!-- Tips: ループにより取得したリスト内の社員情報Beanを使用すること -->
                 <td id="empId"></td>
-                <td title="<%=emp.getName()%>"><%=emp.getName()%></td>
-                <td title="<%=emp.getMail()%>"><%=emp.getMail()%></td>
-                <td title="<%=emp.getProgramingLanguage()%>"><%=emp.getProgramingLanguage() %></td>
-                <td title="<%=emp.getComment()%>"><%=emp.getComment()%></td>
+                <td title="<%=emp.getName()%>"><%=emp._empId%></td>
+                <td title="<%=emp.getMail()%>"><%=emp._password%></td>
+                <td title="<%=emp.getProgramingLanguage()%>"><%=emp._programingLanguage%></td>
+                <td title="<%=emp.getComment()%>"><%=emp._comment%></td>
                 <td>
                     <form action="/MVC_Task/employee" method="get">
                         <input type="hidden" name="sender" value="/employeeResult.jsp"></input>

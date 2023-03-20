@@ -32,6 +32,7 @@ public final class ResponseBean {
         this._message = message;
         this._requestStatus = requestStatus;
         this._employeeBeanList = employeeBeanList;
+        System.out.println(this._employeeBeanList);
     }
 
     /**
@@ -65,11 +66,14 @@ public final class ResponseBean {
      */
     public void setEmplyeeBeanList(List<EmployeeBean> empBeanList) {
         this._employeeBeanList = empBeanList;
+        System.out.println(this._employeeBeanList);
     }
 
     /** @return 社員情報データ */
     public List<EmployeeBean> getEmplyeeBeanList() {
-        return _employeeBeanList;
+    	System.out.println(_employeeBeanList);
+    	return _employeeBeanList;
+        
     }
 
 }

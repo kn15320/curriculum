@@ -3,7 +3,6 @@ package skillcheck.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -40,13 +39,14 @@ public final class EmployeeManagementController extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Logger.logStart(new Throwable());
-
+        
         RequestType requestType = null;
-
+        destinationTarget = request.getParameter(CONST_ELEMENT_NAME_REQUEST);
+        //System.out.println(destinationTarget);
         // FIXME Step-4-1: 社員情報管理サービスのインスタンスを生成しなさい。
         // Tips: 定義済みフィールド変数を使用
         // [ここへ記述]
-        EmployeeManagementService employeeMS = new EmployeeManagementService();
+        ems = new EmployeeManagementService();
         
         boolean hasSession = false;
 
@@ -56,7 +56,8 @@ public final class EmployeeManagementController extends BaseServlet {
             Logger.log(new Throwable(), "hasSession = " + hasSession);
 
             // RequestTypeに未存在のキー値が指定された場合は例外発生
-            requestType = this.getRequestType(request);
+            requestType = this.getRequestType(request);  
+            //System.out.println(requestType);
             Logger.log(new Throwable(), "RequestType = " + requestType.toString());
 
             // セッション切れの場合は早期離脱（finallyは実行される）
@@ -120,7 +121,9 @@ public final class EmployeeManagementController extends BaseServlet {
         Function<HttpServletRequest, List<String>> rmdGetEmpIdList = (rmdRequest) -> {
             // FIXME Step-4-2: 各jspよりPOSTで送信されたリクエストパラメーターの社員番号を取得しなさい。
             // Tips: jsp側のname属性と一致させること
-            final String pEmpId = "empId";
+            final String[] pEmpId = request.getParameterValues("empId");
+            System.out.println(pEmpId);
+            
             return Arrays.asList(pEmpId);
         };
         /* 関数型インターフェース（ラムダ式）- END */
@@ -141,7 +144,7 @@ public final class EmployeeManagementController extends BaseServlet {
             // FIXME Step-4-3: 社員情報管理サービスのインスタンス変数を生成しなさい。
             // Tips: 定義済みフィールド変数を使用
             // [ここへ記述]
-            List<String> reqE = new LinkedList<String>();
+            ems = new EmployeeManagementService();
             reqEmpIdList = rmdGetEmpIdList.apply(request);
             reqEmpIdList.forEach(id -> Logger.log(new Throwable(), "reqEmpId = " + id));
 
@@ -174,6 +177,7 @@ public final class EmployeeManagementController extends BaseServlet {
             
             String view = "/login.jsp";
             RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+            dispatcher.forward(request, response);
 
             Logger.log(new Throwable(), "遷移先 = " + this.destinationTarget);
 
@@ -182,6 +186,7 @@ public final class EmployeeManagementController extends BaseServlet {
                 this.getServletContext().getRequestDispatcher(this.destinationTarget).forward(request, response);
             } else {
                 response.sendRedirect(CONST_DESTINATION_LOGIN_JSP);
+                //System.out.println(CONST_DESTINATION_LOGIN_JSP);
             }
 
             this.ems = null;
@@ -202,8 +207,10 @@ public final class EmployeeManagementController extends BaseServlet {
         Logger.logStart(new Throwable());
 
         final String requestTypeName = request.getParameter(CONST_ELEMENT_NAME_REQUEST);
+        //System.out.println(requestTypeName);
         Logger.log(new Throwable(), "requestTypeName = " + requestTypeName);
-
+        
+        
         RequestType requestType = null;
 
         if (Objects.isNull(this.responseBean)) this.responseBean = new ResponseBean();

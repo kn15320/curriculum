@@ -23,7 +23,8 @@ public final class EmployeeBean {
     private String _comment;
     /** ・削除フラグ（0:未削除/1:削除） */
     private String _deleteFlg;
-	private String _name;
+	 /**名前 **/
+    private String _name;
 
     /**
      * コンストラクタ: パラメーターなし
@@ -104,6 +105,14 @@ public final class EmployeeBean {
         return _password;
     }
 
+    public void setName(String name) {
+    	this._name = name;
+    }
+    
+    public String getName() {
+    	return _name ;
+    }
+    
     /**
      * @param name <pre>セットするStringクラスの氏名</pre>
      */
