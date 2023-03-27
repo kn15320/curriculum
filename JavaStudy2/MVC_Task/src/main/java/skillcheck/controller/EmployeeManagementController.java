@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -121,8 +120,7 @@ public final class EmployeeManagementController extends BaseServlet {
         Function<HttpServletRequest, List<String>> rmdGetEmpIdList = (rmdRequest) -> {
             // FIXME Step-4-2: 各jspよりPOSTで送信されたリクエストパラメーターの社員番号を取得しなさい。
             // Tips: jsp側のname属性と一致させること
-            final String[] pEmpId = request.getParameterValues("empId");
-            System.out.println(pEmpId);
+            final String pEmpId = request.getParameter("empId");
             
             return Arrays.asList(pEmpId);
         };
@@ -145,6 +143,7 @@ public final class EmployeeManagementController extends BaseServlet {
             // Tips: 定義済みフィールド変数を使用
             // [ここへ記述]
             ems = new EmployeeManagementService();
+//            System.out.println(request.getParameter("empId"));
             reqEmpIdList = rmdGetEmpIdList.apply(request);
             reqEmpIdList.forEach(id -> Logger.log(new Throwable(), "reqEmpId = " + id));
 
@@ -153,7 +152,9 @@ public final class EmployeeManagementController extends BaseServlet {
             case LOGIN:
                 Logger.log(new Throwable(), "--- ログイン ---");
                 // ログインエラーの場合はリダイレクトする
+                
                 isLoginError = super.validateLogin(request);
+//                System.out.println(isLoginError);
                 break;
             default:
                 // MEMO: LOGOUTは対象外のため、default扱いとする
@@ -173,11 +174,8 @@ public final class EmployeeManagementController extends BaseServlet {
             // Tips1: リクエストへレスポンス情報をセット
             // Tips2: キー名は「CONST_REQUST_KEY_FOR_RESPONSE_BEAN」使用
             // [ここへ記述]
-            request.setAttribute("CONST_REQUST_KEY_FOR_RESPONSE_BEAN", responseBean);
+            request.setAttribute(CONST_REQUST_KEY_FOR_RESPONSE_BEAN, this.responseBean);
             
-            String view = "/login.jsp";
-            RequestDispatcher dispatcher = request.getRequestDispatcher(view);
-            dispatcher.forward(request, response);
 
             Logger.log(new Throwable(), "遷移先 = " + this.destinationTarget);
 
@@ -186,7 +184,6 @@ public final class EmployeeManagementController extends BaseServlet {
                 this.getServletContext().getRequestDispatcher(this.destinationTarget).forward(request, response);
             } else {
                 response.sendRedirect(CONST_DESTINATION_LOGIN_JSP);
-                //System.out.println(CONST_DESTINATION_LOGIN_JSP);
             }
 
             this.ems = null;

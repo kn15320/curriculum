@@ -96,6 +96,7 @@ public final class EmployeeManagementService extends BaseService implements Empl
                 // FIXME Step-5-8: SQLの抽出結果（resultSet）の各カラムデータを該当する社員情報Beanへセットしなさい。
                 // Tips1: セット項目: 社員番号、パスワード、名前、メールアドレス、プログラミング言語、コメント
                 // Tips2: 正解パターンは複数あり
+                
                 EmployeeBean employeeBean = new EmployeeBean(
                         this.resultSet.getString("empid"),
                         this.resultSet.getString("password"),
@@ -110,7 +111,7 @@ public final class EmployeeManagementService extends BaseService implements Empl
                 employeeBean.setMail(this.resultSet.getString("mail"));
                 employeeBean.setProgramingLanguage(this.resultSet.getString("programingLanguage"));
                 employeeBean.setComment(this.resultSet.getString("comment"));
-                System.out.println(employeeBean.getEmpId());
+                //System.out.println(employeeBean.getEmpId());
                 // 社員情報リストへ追加
                 empResultList.add(employeeBean);
                 System.out.println(empResultList.size());
@@ -131,8 +132,8 @@ public final class EmployeeManagementService extends BaseService implements Empl
                 case FIND_BY_EMPID:
                 case FIND_BY_EMPID_WITH_LIKE:
                     // MEMO: findFirst().orElse(null)は、リストの最初の1件を取得、無ければ、「null」を返す
+                	System.out.println(empResultList.stream().findFirst());
                     EmployeeBean employeeBean = empResultList.stream().findFirst().orElse(null);
-                    System.out.println(employeeBean);
                     final int count = Objects.isNull(employeeBean) ? 0 : empResultList.size();
                     this.reqMessage = String.format(ConstMessage.SUCCECSS_RECORD_COUNT, count);
                     employeeBean = null;
@@ -144,7 +145,6 @@ public final class EmployeeManagementService extends BaseService implements Empl
 
             // レスポンスデータに社員情報、リクエストステータス、メッセージをセット
             this.responseBean.setEmplyeeBeanList(empResultList);
-            System.out.println(empResultList);
             this.responseBean.setRequestStaus(this.reqStatus);
             this.responseBean.setMessage(this.reqMessage);
 
@@ -179,7 +179,7 @@ public final class EmployeeManagementService extends BaseService implements Empl
         EmployeeBean emp = null;
 
         // クエリ用文字列を連結させて作成
-//        sbQuery.append(ConstSQL.SELECT_BASE);
+        //sbQuery.append(ConstSQL.SELECT_BASE);
 
         try {
             // 「全件検索」以外の場合は、条件クエリを追加する
@@ -194,8 +194,8 @@ public final class EmployeeManagementService extends BaseService implements Empl
                 // FIXME Step-5-4: pEmployeeBeanListの「1件目の要素のみ」から社員情報を取得しなさい。//どう意味か何を求められているか？何をしたら良いか？
                 // Tips1: ループ文を使用すること（正解は複数パターンあります）//配列から配列の値を抜き出す
                 // Tips2: 格納先はローカル変数のempとすること
+//            	System.out.println(pEmployeeBeanList.size());
                 // [ここへ記述]
-            	System.out.println(pEmployeeBeanList.size());
             	for(int i = 0; i < pEmployeeBeanList.size(); i++) {
             		emp = pEmployeeBeanList.get(i);
             		System.out.println(emp);
@@ -220,7 +220,7 @@ public final class EmployeeManagementService extends BaseService implements Empl
                     final String empId = ExecuteCase.FIND_BY_EMPID_WITH_LIKE.equals(eCase)
                             ? ("%" + emp.getEmpId() + "%")
                             : emp.getEmpId();
-                    System.out.println(empId);
+//                    System.out.println(empId);
                     // FIXME Step-5-6: preparedStatementに適切なパラメーターをセットしなさい。
                     // Tips: パラメータをセットするインデックスに注意
                     // [ここへ記述]
@@ -229,7 +229,7 @@ public final class EmployeeManagementService extends BaseService implements Empl
                     // FIXME Step-5-7: preparedStatementよりSQL(SELECT文)を実行し、resultSetへ結果を格納しなさい。
                     // [ここへ記述]
                     resultSet = preparedStatement.executeQuery();
-                    System.out.println(resultSet);
+//                    System.out.println(resultSet);
                     
                     
                     Logger.log(new Throwable(), "SQL: " +  this.preparedStatement.toString());

@@ -27,7 +27,7 @@ import skillcheck.util.PasswordHashUtil;
 public abstract class BaseServlet extends HttpServlet {
 
     /* 定数 */
-    private static final String CONST_SESSION_KEY_FOR_LOGIN = "?";
+    private static final String CONST_SESSION_KEY_FOR_LOGIN = "login";
 
     // FIXME Step-3: 定数定義
     // FIXME Step-3-1: リクエスト判別用のボタンの属性名を記述しなさい。
@@ -37,7 +37,7 @@ public abstract class BaseServlet extends HttpServlet {
     protected static final String CONST_REQUST_KEY_FOR_RESPONSE_BEAN = "responseBean";
 
     /** ・リクエスト対象（リクエスト&レスポンスを渡す先）のjspファイル */
-    protected static final String CONST_DESTINATION_LOGIN_JSP = "/login.jsp";
+    protected static final String CONST_DESTINATION_LOGIN_JSP = "/MVC_Task/login.jsp";
     // FIXME Step-3-2: 実行結果表示用のjspファイルのパスを記述しなさい。
     protected static final String CONST_DESTINATION_RESULT_JSP = "/employeeResult.jsp";
 
@@ -143,9 +143,7 @@ public abstract class BaseServlet extends HttpServlet {
         boolean isLoginError = false;
 
         final String reqEmpId = request.getParameter("empId").trim();
-        System.out.println(reqEmpId);
         final String reqPassword = request.getParameter("password").trim();
-        System.out.println(reqPassword);
         try {
             // FIXME Step-3-3: 社員情報管理サービスより、社員情報を取得する処理を呼び出しなさい。//IDとパスワード　request
             // Tips1: 社員情報管理サービスはインスタンスが生成済みのものを利用すること
@@ -154,10 +152,9 @@ public abstract class BaseServlet extends HttpServlet {
 //            ems.getEmployeeData(, resEmployeeBean);
         	//インスタンス化
         	EmployeeBean empget = new EmployeeBean(reqEmpId);
-        	ems.getEmployeeData(ExecuteCase.FIND_BY_EMPID, empget);
+        	responseBean = ems.getEmployeeData(ExecuteCase.FIND_BY_EMPID, empget);
             // 最初の1件を取得
             resEmployeeBean = responseBean.getEmplyeeBeanList().stream().findFirst().orElse(null);
-            System.out.println(resEmployeeBean);
             if (Objects.nonNull(resEmployeeBean)) {
                 // パスワードチェック
                 final String hashPassword = PasswordHashUtil.getSafetyPassword(reqPassword, reqEmpId);
@@ -170,12 +167,12 @@ public abstract class BaseServlet extends HttpServlet {
                 } else {
                     // パスワード不一致
                     message = ConstMessage.ERROR_UNMATCH_PASSWORD;
-                    System.out.println(message);
+//                    System.out.println(message);
                 }
             } else {
                 // ログイン時に該当する社員情報が未存在
                 message = ConstMessage.ERROR_UNMATCH_USER;
-                System.out.println(message);
+//                System.out.println(message);
             }
             this.responseBean.setMessage(message);
 
@@ -188,6 +185,7 @@ public abstract class BaseServlet extends HttpServlet {
             if (Objects.isNull(this.destinationTarget)) {
                 isLoginError = true;
                 // リダイレクトで返すため、セッション情報にレスポンス情報をセットする
+//                System.out.println(this.responseBean);
                 session.setAttribute(CONST_REQUST_KEY_FOR_RESPONSE_BEAN, this.responseBean);
             }
         }

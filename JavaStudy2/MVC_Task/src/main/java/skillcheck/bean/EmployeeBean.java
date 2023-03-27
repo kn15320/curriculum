@@ -153,6 +153,7 @@ public final class EmployeeBean {
      * @param deleteFlg <pre>セットするStringクラスの削除フラグ</pre>
      */
     public void setDeleteFlg(String deleteFlg) {
+    	System.out.println(deleteFlg);
         this._deleteFlg = deleteFlg;
     }
 

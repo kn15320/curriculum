@@ -24,7 +24,7 @@
 
         // FIXME Step-2-1: リクエストよりレスポンスBeanを取得しなさい。
         // Tips: 正確な型（クラス）でキャストすること java ResponseBeanへキャスト
-        responseBean = (ResponseBean)request.getAttribute("empId");//文字変更
+        responseBean = (ResponseBean)request.getAttribute("responseBean");//文字変更
         System.out.println(responseBean);
         empResultList = responseBean.getEmplyeeBeanList();
         requestStatus = responseBean.getRequestStaus();
@@ -69,7 +69,7 @@
                 <!-- FIXME Step-2-3: 社員情報一覧に表示する内容を式（Expression）を用いて表示しなさい。 -->
                 
                 <!-- Tips: ループにより取得したリスト内の社員情報Beanを使用すること -->
-                <td id="empId"></td>
+                <td id="empId"><%=emp.getEmpId()%></td>
                 <td title="<%=emp.getName()%>"><%=emp.getName()%></td>
                 <td title="<%=emp.getMail()%>"><%=emp.getMail()%></td>
                 <td title="<%=emp.getProgramingLanguage()%>"><%=emp.getProgramingLanguage() %></td>

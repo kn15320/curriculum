@@ -87,7 +87,7 @@
             <!-- Tips: common.cssより赤色の文字色を定義しているスタイルを確認 -->
             <!-- [ここへ記述] -->
             <div class="error-label">
-            	<label>該当する社員情報がありません。</label>
+            	<label><%=message%></label>
             </div>
             <br>
         <% } %>

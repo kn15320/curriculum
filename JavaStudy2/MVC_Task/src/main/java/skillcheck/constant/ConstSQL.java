@@ -25,11 +25,11 @@ public final class ConstSQL {
 
     // FIXME Step-2-1: [SQL-SELECT] 社員情報テーブルより、作成日時、更新日時、削除フラグを除いたカラムを取得するクエリを作成しなさい。
     /** 社員情報一覧取得用クエリ: 取得カラム + 取得元テーブル */
-    public static final String SELECT_BASE = "SELECT empid, password, name, mail, programinglanguage, comment FROM employee";
+    public static final String SELECT_BASE = "SELECT empId, password, name, mail, programinglanguage, comment FROM employee";
     /** 社員情報一覧取得用クエリ: 削除されていない社員情報を社員番号順に取得 */
-    public static final String SELECT_BY_DELETE_FLG_ZERO = "SELECT empid, password, name, mail, programinglanguage, comment FROM employee WHERE deleteFlg = '0' ORDER BY empId ASC";
+    public static final String SELECT_BY_DELETE_FLG_ZERO = "SELECT empId, password, name, mail, programinglanguage, comment FROM employee WHERE deleteFlg = '0' ORDER BY empId ASC";
     /** 社員番号を条件とするクエリ: 完全一致 */
-    public static final String SELECT_BY_EMPID = "SELECT empid, password, name, mail, programinglanguage, comment FROM employee WHERE empId = ? AND deleteFlg = '0'";
+    public static final String SELECT_BY_EMPID = "SELECT empId, password, name, mail, programinglanguage, comment FROM employee WHERE empId = ? AND deleteFlg = '0'";
     		
 
     /** プリペアードステートメントで使用するクエリの条件値用プレースホルダー */
